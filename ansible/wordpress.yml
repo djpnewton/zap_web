@@ -1,0 +1,37 @@
+---
+- name: wordpress
+  hosts: all
+  become: yes
+  become_user: root
+
+  vars:
+    wp_version: "4.9.8"
+    wp_checksum: "sha1:0945bab959cba127531dceb2c4fed81770812b4f"
+    wp_db_name: "wp_db"
+    wp_db_user: "wp_user"
+    wp_db_password: "TODO"
+    auto_up_disable: false
+    core_update_level: true
+  tasks:
+
+    - name: download wordpress
+      get_url: url=http://wordpress.org/wordpress-{{ wp_version }}.tar.gz dest=/opt/wordpress-{{ wp_version }}.tar.gz
+               checksum="{{ wp_checksum }}"
+
+    - name: extract archive
+      command: chdir=/opt/ /bin/tar xvf wordpress-{{ wp_version }}.tar.gz creates=/opt/wordpress
+
+    - name: create wordpress database
+      mysql_db: name={{ wp_db_name }} state=present
+
+    - name: create wordpress database user
+      mysql_user: name={{ wp_db_user }} password={{ wp_db_password }} priv={{ wp_db_name }}.*:ALL host='localhost' state=present
+
+    - name: copy wordpress config file
+      template: src=templates/wp-config.php dest=/opt/wordpress/
+
+    - name: set ownership of wordpress files
+      file: path=/opt/wordpress/ owner=www-data group=www-data state=directory recurse=yes
+
+    - name: restart nginx
+      service: name=nginx state=restarted

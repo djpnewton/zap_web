@@ -57,11 +57,3 @@
         name: letsencrypt_renewal
         special_time: daily
         job: letsencrypt renew --post-hook "service nginx reload"
-
-    - name: Copy html data
-      copy:
-        src: ../html/
-        dest: /var/www/{{ domain_name }}
-        owner: www-data
-        group: www-data
-        mode: 0644

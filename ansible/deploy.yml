@@ -58,4 +58,7 @@
   when: VAGRANT == "false"
 - include: fail2ban.yml
   when: VAGRANT == "false"
+- include: mysql.yml
 - include: nginx.yml
+- include: php-fpm.yml
+- include: wordpress.yml

@@ -1,0 +1,14 @@
+---
+- name: php-fpm
+  hosts: all
+  become: yes
+  become_user: root
+
+  tasks:
+
+    - name: install php-fpm and deps
+      apt: name={{ item }} state=present update_cache=yes
+      with_items:
+        - php7.2
+        - php7.2-fpm
+        - php7.2-mysql
