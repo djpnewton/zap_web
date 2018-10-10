@@ -37,6 +37,11 @@ server {
     location / {
         index index.php index.html index.htm;
         try_files $uri $uri/ /index.php?$args;
+
+{% if REQUIRE_PASSWORD | bool %}
+        auth_basic           "Password Required";
+        auth_basic_user_file /etc/nginx/htpasswd;
+{% endif %}
     }
  
     location ~* \.(gif|jpg|jpeg|png|css|js)$ {
