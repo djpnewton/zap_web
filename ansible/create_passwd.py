@@ -24,7 +24,7 @@ def write_stdout():
     alphabet = string.ascii_letters + string.digits
     password = "".join(secrets.choice(alphabet) for i in range(20))
 
-    print(passord)
+    print(password)
 
 cmd = sys.argv[1]
 if cmd == "htpasswd":
