@@ -45,6 +45,7 @@ then
 fi 
 
 ADMIN_EMAIL=admin@zap.me
+CONTACT_EMAIL=contact@zap.me
 VAGRANT=false
 # set deploy variables for production
 DEPLOY_HOST=zap.me
@@ -61,6 +62,7 @@ fi
 # print variables
 echo ":: DEPLOYMENT DETAILS ::"
 echo "   - ADMIN_EMAIL:      $ADMIN_EMAIL"
+echo "   - CONTACT_EMAIL:    $CONTACT_EMAIL"
 echo "   - DEPLOY_HOST:      $DEPLOY_HOST"
 echo "   - DEPLOY_USER:      $DEPLOY_USER"
 echo "   - REQUIRE_PASSWORD: $REQUIRE_PASSWORD"
@@ -73,6 +75,6 @@ then
     # do dangerous stuff
     echo ok lets go!!!
     ansible-playbook --inventory "$DEPLOY_HOST," --user "$DEPLOY_USER" -v \
-        --extra-vars "ADMIN_EMAIL=$ADMIN_EMAIL DEPLOY_HOST=$DEPLOY_HOST VAGRANT=$VAGRANT TESTNET=$TESTNET REQUIRE_PASSWORD=$REQUIRE_PASSWORD" \
+        --extra-vars "ADMIN_EMAIL=$ADMIN_EMAIL CONTACT_EMAIL=$CONTACT_EMAIL DEPLOY_HOST=$DEPLOY_HOST VAGRANT=$VAGRANT TESTNET=$TESTNET REQUIRE_PASSWORD=$REQUIRE_PASSWORD" \
         ansible/deploy.yml
 fi
